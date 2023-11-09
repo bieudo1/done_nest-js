@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,27 +7,27 @@ import { Note } from './note.entity';
 export class NoteService {
   constructor(
     @InjectRepository(Note)
-    private readonly NoteRepository: Repository<Note>,
+    private  noteRepository: Repository<Note>,
   ) {}
 
-  // Retrieves all Notes from the database using the NoteRepository.
+  // Retrieves all Notes from the database using the noteRepository.
   async findAll(): Promise<Note[]> {
-    return this.NoteRepository.find();
+    return await  this.noteRepository.find();
   }
 
-  // Saves a new Note to the database using the NoteRepository.
-  async create(Note: Note): Promise<Note> {
-    return this.NoteRepository.save(Note);
+  // Saves a new Note to the database using the noteRepository.
+  async create(note: Note): Promise<Note> {
+    return await  this.noteRepository.save(note);
   }
 
-  // Updates an existing Note in the database using the NoteRepository.
-  async update(id: number, Note: Note): Promise<Note> {
-    await this.NoteRepository.update(id, Note);
-    return this.NoteRepository.findOne({ where: { id: id } });;
+  // Updates an existing Note in the database using the noteRepository.
+  async update(id: number, note: Note): Promise<Note> {
+    await this.noteRepository.update(id, note);
+    return this.noteRepository.findOne({ where: { id: id } });;
   }
 
-  // Deletes a Note from the database using the NoteRepository.
+  // Deletes a Note from the database using the noteRepository.
   async delete(id: number): Promise<void> {
-    await this.NoteRepository.delete(id);
+    await this.noteRepository.delete(id);
   }
 }

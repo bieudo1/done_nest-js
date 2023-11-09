@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Note } from './note.entity';
 import { NoteModule } from './notes/note.module';
-import { Note } from './notes/note.entity';
 
 @Module({
   imports: [
@@ -11,13 +11,13 @@ import { Note } from './notes/note.entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'done',
+      username: 'postgres',
       password: '123456',
-      database: 'text_notes_db',
+      database: 'postgres',
       autoLoadEntities: true,
-      entities: [Note],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Note]),
   ],
   controllers: [AppController],
   providers: [AppService],
