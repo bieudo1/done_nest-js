@@ -14,7 +14,9 @@ export class NoteService {
   async findAll(): Promise<Note[]> {
     return await  this.noteRepository.find();
   }
-
+  async findOne(id: number): Promise<Note> {
+    return this.noteRepository.findOne({ where: { id: id } });;
+  }
   // Saves a new Note to the database using the noteRepository.
   async create(note: Note): Promise<Note> {
     return await  this.noteRepository.save(note);
