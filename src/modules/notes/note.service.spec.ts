@@ -71,37 +71,37 @@ describe('NoteService', () => {
     expect(result).toEqual(note);
   });
 
-//  it('Updates => Should Updates a new note and return its data', async () => {
-//     // Arrange
-//     const updateNoteDto = {
-//       id: 1,
-//       title: 'Sample Note',
-//       content: 'This is a sample note content.',
-//       createdAt: new Date(),
-//       updatedAt: new Date(),
-//    };
-//     const id = 1
-//     const note = {
-//       id: 1,
-//       title: 'Sample Note',
-//       content: 'This is a sample note content.',
-//       createdAt: new Date(),
-//       updatedAt: new Date(),
-//     };
-//    jest.spyOn(mockNoteRepository, 'findOne').mockResolvedValue(note);
-//   //  jest.spyOn(mockNoteRepository, 'findOne').mockReturnValue(note);
-//     jest.spyOn(mockNoteRepository, 'update').mockReturnValue({ affected: 1 });
+ it('Updates => Should Updates a new note and return its data', async () => {
+    // Arrange
+    const updateNoteDto = {
+      id: 1,
+      title: 'Sample Note',
+      content: 'This is a sample note content.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+   };
+    const id = 1
+    const note = {
+      id: 1,
+      title: 'Sample Note',
+      content: 'This is a sample note content.',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+   jest.spyOn(mockNoteRepository, 'findOne').mockResolvedValue(note);
+  //  jest.spyOn(mockNoteRepository, 'findOne').mockReturnValue(note);
+    jest.spyOn(mockNoteRepository, 'update').mockReturnValue({ affected: 1 });
 
-//    // Act
-//     const result = await service.update(id,updateNoteDto);
+   // Act
+    const result = await service.update(id,updateNoteDto);
 
-//    // Assert
-//    expect(result).toEqual({ ...note, ...updateNoteDto });
-//    expect(mockNoteRepository.findOne).toBeCalled();
-//    expect(mockNoteRepository.findOne).toBeCalledWith(id);
-//    expect(mockNoteRepository.update).toBeCalled();
-//    expect(mockNoteRepository.update).toBeCalledWith(id, updateNoteDto);
-//   });
+   // Assert
+   expect(result).toEqual({ ...note, ...updateNoteDto });
+   expect(mockNoteRepository.findOne).toBeCalled();
+   expect(mockNoteRepository.findOne).toBeCalledWith({ where: { id: id } });
+   expect(mockNoteRepository.update).toBeCalled();
+   expect(mockNoteRepository.update).toBeCalledWith(id, updateNoteDto);
+  });
 
   it('Deletes => Should Deletes a new note and return its data', async () => {
     // Arrange
