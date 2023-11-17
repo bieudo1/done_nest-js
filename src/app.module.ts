@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NoteModule } from './modules/notes/note.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 
 @Module({
@@ -20,6 +21,7 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
     NoteModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

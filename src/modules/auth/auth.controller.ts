@@ -5,6 +5,7 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import 'dotenv/config';
 import { AuthService } from './auth.service';
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 @Controller('auth')
 export class AuthController {
@@ -21,16 +22,17 @@ export class AuthController {
   }
 
   @Post()
-  async create(@Body() user: any) {
-    const payload = await this.authService.create(user)
-    const token = this.jwtService.sign(payload);
+  async create(@Body() requestBody: any) {
+    const payload = await this.authService.create(requestBody)
+    const token = this.jwtService.sign(payload, { secret: JWT_SECRET_KEY });
     return { token };
   }
 
   @Post('login_1')
-  async login_1(@Body() user: any) {
-    const payload = await this.authService.login_1(user)
-    const token = this.jwtService.sign(payload);
-    return { token };
+  async login_1(@Body()requestBody: any) {
+    const {name,id,email,roles} = await this.authService.login_1(requestBody)
+    const payload = ({ name, email, id, roles })
+    const token = this.jwtService.sign(payload, { secret: JWT_SECRET_KEY });
+    return { token,name,id,email };
   }
 }

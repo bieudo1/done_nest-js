@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../user/user.entity';
 const bcrypt = require("bcryptjs");
 import { JwtService } from '@nestjs/jwt';
 
@@ -14,23 +14,23 @@ export class AuthService {
   ) {}
 
   // Retrieves all Notes from the database using the authRepository.
-  async login_1(user: User): Promise<User> {
-    let { publicKey, id } = user;
-    const getUser = await this.authRepository.findOne({ where: { id: id } });
-    const isMatch = await bcrypt.compare(publicKey,getUser.publicKey);
-    // if (!isMatch) return { id: 0, publicKey: "sai" }
-    return ({id,publicKey})
+  async login_1(requestBody:any): Promise<User> {
+    let { password , email} = requestBody;
+    const getUser = await this.authRepository.findOne({ where: { email: email }
+     });
+    const isMatch = await bcrypt.compare(password, getUser.password);
+    if (!isMatch) {
+      throw new NotFoundException('wrong password')
+    }
+    return (getUser)
   }
   // Saves a new Note to the database using the authRepository.
-  async create(user: User): Promise<User> {
-    let { publicKey, id } = user;
+  async create(urequestBody:any): Promise<User> {
+    let {password,name , email,roles } = urequestBody;
     const salt = await bcrypt.genSalt(10);
-    publicKey = await bcrypt.hash(publicKey, salt);
-    let createUser = await this.authRepository.save({ publicKey, id });
-    // console.log(createUser)
-    let token = this.jwtService.sign(user);
-    console.log(token)
-    return ({id,publicKey})
+    password = await bcrypt.hash(password, salt);
+    let createUser = await this.authRepository.save({ password,name ,email,roles });
+    return (createUser)
   }
 
 }

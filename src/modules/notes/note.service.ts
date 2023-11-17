@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Note } from './note.entity';
@@ -23,9 +23,13 @@ export class NoteService {
   }
 
   // Updates an existing Note in the database using the noteRepository.
-  async update(id: number, note: Note): Promise<Note> {
-    await this.noteRepository.update(id, note);
-    return this.noteRepository.findOne({ where: { id: id } });;
+  async update(id: number, requestBody: any): Promise<Note> {
+    let note = await this.noteRepository.findOne({ where: { id: id } });
+    if (!note) {
+      throw new NotFoundException('Note do not exist')
+    }
+    note = {...note, ...requestBody}
+    return await this.noteRepository.save(note);
   }
 
   // Deletes a Note from the database using the noteRepository.
