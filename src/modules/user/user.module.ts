@@ -10,11 +10,9 @@ import { UserService } from './user.service';
   imports: [
     JwtModule.register({
       global: true,
-      secret: crypto.randomBytes(32).toString('hex'),
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
-  TypeOrmModule.forFeature([User]),
-
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UserController],
   providers: [UserService],

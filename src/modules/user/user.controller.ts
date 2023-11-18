@@ -16,6 +16,11 @@ export class UserController {
     private readonly UserService: UserService,
   ) { }
 
+  @Post()
+  async create(@Body() requestBody: any) {
+    return await this.UserService.create(requestBody);
+  }
+
   @Get()
   @UseGuards(new RoleGuard(['admin']))
   @UseGuards(AuthGuard)

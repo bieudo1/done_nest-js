@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column,ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 enum ROLES {
   ADMIN= 'ADMIN',
@@ -17,6 +18,7 @@ export class User {
   email: string;
 
   @Column('text')
+  @Exclude()
   password: string;
 
   @Column({ default: ROLES.USERS })

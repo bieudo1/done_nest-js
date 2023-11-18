@@ -5,7 +5,6 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-
 @Injectable()
 export class RoleGuard implements CanActivate {
   constructor(private roles: string[]) {}

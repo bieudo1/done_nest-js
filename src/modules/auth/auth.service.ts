@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
 const bcrypt = require("bcryptjs");
 import { JwtService } from '@nestjs/jwt';
+import { access_token_private_key } from 'src/constraints/jwt.constraint';
 
 @Injectable()
 export class AuthService {
@@ -13,16 +14,24 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  generateAccessToken(payload: any) {
+		return  this.jwtService.sign(payload, {
+			algorithm: 'RS256',
+			privateKey: access_token_private_key,
+			expiresIn: '1h',
+		});
+	}
   // Retrieves all Notes from the database using the authRepository.
-  async login_1(requestBody:any): Promise<User> {
+  async login(requestBody:any) {
     let { password , email} = requestBody;
     const getUser = await this.authRepository.findOne({ where: { email: email }
-     });
+    });
     const isMatch = await bcrypt.compare(password, getUser.password);
     if (!isMatch) {
       throw new NotFoundException('wrong password')
     }
-    return (getUser)
+    const token = this.generateAccessToken({getUser})
+    return ({getUser,token})
   }
   // Saves a new Note to the database using the authRepository.
   async create(urequestBody:any): Promise<User> {
