@@ -44,6 +44,11 @@ export class UserService {
     return (getUser)
   }
 
+  async getById(id: number): Promise<User> {
+    const getUser = await this.userRepository.findOne({ where: { id: id }});
+    return (getUser)
+  }
+
   async update(id: number, currentUser: any, body: any): Promise<User> {
     let user = await this.userRepository.findOne({ where: { id: id } });
     if (!user) {

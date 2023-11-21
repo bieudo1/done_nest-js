@@ -6,7 +6,7 @@ function checkExistFolder(name: string) {
 	const check_path = path.join(__dirname, `../../${name}`);
 	!fs.existsSync(check_path) && fs.mkdir(check_path, (err) => err);
 }
-function getAccessTokenKeyPair() {
+  function getAccessTokenKeyPair() {
 	checkExistFolder('secure');
 	const access_token_private_key_path = path.join(
 		__dirname,
@@ -108,7 +108,7 @@ function getRefreshTokenKeyPair() {
 	};
 }
 
-export const { access_token_private_key, access_token_public_key } =
+export  const  { access_token_private_key, access_token_public_key } =
 	getAccessTokenKeyPair();
 
 export const { refresh_token_private_key, refresh_token_public_key } =

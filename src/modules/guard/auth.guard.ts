@@ -1,14 +1,11 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
 import { access_token_public_key } from 'src/constraints/jwt.constraint';
-let returnTimes = 1
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService,
     ) { }
   async canActivate(context: ExecutionContext): Promise<boolean>  {
     const request = context.switchToHttp().getRequest();
