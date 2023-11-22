@@ -44,9 +44,10 @@ export class UserController {
   @UseGuards(AuthGuard)
   async findOne(
     @Param('id') id: number,
-    @CurrentUser() currentUser,
+    @CurrentUser() currentUser:any,
   ) {
     return await this.UserService.findOne(id,currentUser);
   }
+
 
 }

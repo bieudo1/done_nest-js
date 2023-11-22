@@ -6,6 +6,7 @@ import { NoteModule } from './modules/notes/note.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { ConversationModule } from './modules/conversation/conversation.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { ChatModule } from './modules/chat/chat.module';
     AuthModule,
     UserModule,
     ChatModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -51,8 +51,8 @@ export class AuthService {
       algorithms: ['RS256'],
 			 publicKey:access_token_public_key,
     });
-    if (payload.userId) {
-      return this.userService.getById(payload.userId);
+    if (payload.getUser.id) {
+      return this.userService.getById(payload.getUser.id);
     }
   }
 
